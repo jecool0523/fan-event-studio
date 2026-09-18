@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Fan Event Studio"
+description = "A mobile-first fan event operations app inspired by the provided Figma design, covering event setup, reservations, QR check-in, benefits inventory, notices, and settlement."
+version = "1.0.0"
+id = "artifacts/fan-event-studio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21817
+
+[services.development]
+run = "pnpm --filter @workspace/fan-event-studio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/fan-event-studio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/fan-event-studio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21817"
+BASE_PATH = "/"
